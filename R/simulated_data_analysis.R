@@ -364,11 +364,6 @@ hd.study<-function(simu.data=simu.data, m=30, num.interp=30, n=80,
 
         ind.Ta<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
         indvidual.Ta[id]<-ind.Ta$chpt
-
-      }else{
-
-        ind.Ta<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
-        indvidual.Ta[id]<-ind.Ta$chpt
       }
 
 
