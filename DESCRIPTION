@@ -1,6 +1,6 @@
 Package: HDChangePoint
 Type: Package
-Title: This package estimates individual longitudinal trajectories and their inflection points using the parametric and the nonparametric procedures. 
+Title: Estimating disease onset from change points of markers measured with error
 Version: 0.1.0
 Author: c(person(given = "Unkyung",
            family = "Lee",
@@ -15,12 +15,13 @@ Description: The parametric approach uses a nonlinear mixed effects model, which
              can be estimated using the best linear unbiased predictors. The multi-stage nonparametric approach is designed to estimate individual longitudinal trajectories and 
              and their inflection points iteratively. To do this, we develop an iterative algorithm.
 License: GPL-2
-Depends: R (>= 3.0.1), nlme, scam, ShapeChange, sfsmisc
-Imports: nlme, mgcv, scam, ggplot2, ShapeChange, sfsmisc
+Depends: R (>= 3.0.1)
+Imports: mgcv, scam, ShapeChange, nlme, ggplot2, sfsmisc, graphics, grDevices, stats
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+
