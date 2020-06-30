@@ -1,5 +1,6 @@
 #' Generate A Longitudinal Data Set
 #'
+#'
 #' @param n number of sample size.
 #' @param model  a character string for a nonlinear model: \code{"logist"} or \code{"arctan"}.
 #' @param p a parameter for the dimension of coefficients in the log-normal model for the inflection point.
@@ -13,7 +14,7 @@
 #' @param u.sd a true scale parameter of the random error term in the inflection point model.
 #'
 #' @return A data frame of the longitudinal data with 7 variables:
-#'
+#' \itemize{
 #'        \item{subj.id}{a vector of the ID number for all subjects.}
 #'        \item{subj.cov}{ a vector of the subject specific covariates for all subjects.}
 #'        \item{true_logt}{a vector of the inflection points for all subjects.}
@@ -21,7 +22,7 @@
 #'        \item{omega}{a vector of the S-shaped function values depending on the ages and true_logt for all subjects.}
 #'        \item{tms}{a vector of the observed longitudinal responses (total motor scores) for all subjects}
 #'        \item{sex}{a vector of the subjects's gender.}
-#'
+#'}
 #'        The number of rows for the returned data frame is determined by the number of subjects' visits,
 #'        where 5, 6, and 7 visits are randomly assigned to all patients. For example, the first subject made 5 visits and the second subject made 7 visits. Then the size of the data frame containing these two subjects' longitudinal data is 12 by 7.
 #'
@@ -29,31 +30,9 @@
 #' @export
 #'
 #'
-#' @examples
-#'
-#' library(HDChangePoint)
-#'
-#' ## Specify parameters to generate data
-#'
-#' n=80;
-#' model="logist";
-#' p=2;
-#' bb0=0.5;
-#' bb=0.1;
-#' x.sd=0.3;
-#' v1=5;
-#' v2=7;
-#' dist="normal";
-#' eps.sd=0.05;
-#' u.sd=0.05;
-#'
-#' ## Generate a data set
-#'
-#' set.seed(22)
-#' outdata<-mydata(n=n, model=model, p=p, bb0=bb0, bb=bb, x.sd=x.sd, v1=v1, v2=v2, dist=dist, eps.sd=eps.sd, u.sd=u.sd)
-#'
-#'
-#'
+#' @example man/examples/multi_stage_nonpara_example.R
+
+
 mydata<-function(n=80, model="logist",  p=2, bb0=0.1, bb=0.5, x.sd=0.5, v1=5, v2=7, dist="normal", eps.sd=0.05, u.sd=0.05){
 
 

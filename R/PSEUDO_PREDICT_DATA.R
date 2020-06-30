@@ -1,4 +1,4 @@
-#' Generate a simulated dataset to reproduce results in the analysis study.
+#' Generate a simulated dataset to reproduce results in the analysis study
 #'
 #' A pseudo dataset containing subject's id, number of clinical visits, total motor scores,
 #' time of the clinical diagnosis, ages at clinical visits, CAG repeats, Gender, and log transformed ages at clinical visits.
@@ -23,3 +23,4 @@
 #'
 #'
 "PSEUDO_PREDICT_HD"
+
