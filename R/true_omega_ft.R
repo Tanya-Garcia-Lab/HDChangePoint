@@ -13,7 +13,6 @@
 #'
 #'
 #' @examples
-#'
 #' library(HDChangePoint)
 #'
 #'
