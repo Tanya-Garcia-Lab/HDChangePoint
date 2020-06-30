@@ -3,8 +3,9 @@
 \docType{data}
 \name{PSEUDO_PREDICT_HD}
 \alias{PSEUDO_PREDICT_HD}
-\title{Generate a simulated dataset to reproduce results in the analysis study.}
-\format{A dataframe including 80 subjects' longitudinal data with 8 variables:
+\title{Generate a simulated dataset to reproduce results in the analysis study}
+\format{
+A dataframe including 80 subjects' longitudinal data with 8 variables:
 \describe{
   \item{SUBJID}{identification number of a subject.}
   \item{event}{number of events (visits) for a subject.}
@@ -12,9 +13,10 @@
   \item{TRUE_INFL_POINT}{simulated true inflection point for each subject. In practice, this is time of the clinically diagnosed disease onset.}
     \item{AGE}{age at each visit for a subject.}
   \item{CAG}{length of CAG repeats for a subject.}
-    \item{gender}{male for 0; female for 1}
+    \item{gender}{male for 0; female for 1.}
   \item{logAGE}{log-transformed ages corresponding \code{AGE} at each visit for a subject.}
-}}
+}
+}
 \source{
 see data-raw/PSEUDO_PREDICT_HD.R
 }

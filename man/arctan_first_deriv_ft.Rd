@@ -34,7 +34,7 @@ gam3=pi/1.1
 logage<-seq(-0.5, 0.5, by=0.1)
 
 ## Obtain a vector of the first derivative of the arctangent model
-arctan_first_derv<-arctan_first_deriv_ft(2.45/pi, 0, pi/1.1, 0.8, logage)
+arctan_first_derv<-arctan_first_deriv_ft(gam1=2.45/pi, gam2=0, gam3=pi/1.1,  logage=logage)
 
 ## Plot the first derivative of the arctangent model
 plot(logage, arctan_first_derv, type='l')

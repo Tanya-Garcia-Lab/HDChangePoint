@@ -24,9 +24,7 @@ a vector of response variables under the deterministic arctangent model, whose l
 Arctanget model for the parametric nonlinear mixed effects model (nlme) procedure
 }
 \examples{
-
 library(HDChangePoint)
-
 ## Specify parameters
 gam1=2.45/pi
 gam2=0
@@ -41,6 +39,4 @@ arctanft<-arctanf(2.45/pi, 0, pi/1.1, 0.8, logage)
 
 ## Plot the S-shaped curve under the arctangent model
 plot(logage, arctanft, type='l')
-
-
 }

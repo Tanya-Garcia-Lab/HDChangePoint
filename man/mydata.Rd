@@ -4,9 +4,19 @@
 \alias{mydata}
 \title{Generate A Longitudinal Data Set}
 \usage{
-mydata(n = 80, model = "logist", p = 2, bb0 = 0.1, bb = 0.5,
-  x.sd = 0.5, v1 = 5, v2 = 7, dist = "normal", eps.sd = 0.05,
-  u.sd = 0.05)
+mydata(
+  n = 80,
+  model = "logist",
+  p = 2,
+  bb0 = 0.1,
+  bb = 0.5,
+  x.sd = 0.5,
+  v1 = 5,
+  v2 = 7,
+  dist = "normal",
+  eps.sd = 0.05,
+  u.sd = 0.05
+)
 }
 \arguments{
 \item{n}{number of sample size.}
@@ -33,7 +43,7 @@ mydata(n = 80, model = "logist", p = 2, bb0 = 0.1, bb = 0.5,
 }
 \value{
 A data frame of the longitudinal data with 7 variables:
-
+\itemize{
        \item{subj.id}{a vector of the ID number for all subjects.}
        \item{subj.cov}{ a vector of the subject specific covariates for all subjects.}
        \item{true_logt}{a vector of the inflection points for all subjects.}
@@ -41,7 +51,7 @@ A data frame of the longitudinal data with 7 variables:
        \item{omega}{a vector of the S-shaped function values depending on the ages and true_logt for all subjects.}
        \item{tms}{a vector of the observed longitudinal responses (total motor scores) for all subjects}
        \item{sex}{a vector of the subjects's gender.}
-
+}
        The number of rows for the returned data frame is determined by the number of subjects' visits,
        where 5, 6, and 7 visits are randomly assigned to all patients. For example, the first subject made 5 visits and the second subject made 7 visits. Then the size of the data frame containing these two subjects' longitudinal data is 12 by 7.
 }
@@ -49,28 +59,22 @@ A data frame of the longitudinal data with 7 variables:
 Generate A Longitudinal Data Set
 }
 \examples{
-
 library(HDChangePoint)
+# How to Generate Simulated Data using mydata() #
+n=80; model="logist"; p=2; bb0=0.5;bb=0.1; x.sd=0.3; v1=8; v2=10;
+dist="normal"; eps.sd=0.05;u.sd=0.05;
 
-## Specify parameters to generate data
-
-n=80;
-model="logist";
-p=2;
-bb0=0.5;
-bb=0.1;
-x.sd=0.3;
-v1=5;
-v2=7;
-dist="normal";
-eps.sd=0.05;
-u.sd=0.05;
-
-## Generate a data set
+## Specify parameters for the multi-stage nonparametric procedure
+num.interp=45;newl=45; k1=20; k2=20; tolerance=0.009; iter=0; time.length=20;
 
 set.seed(22)
-outdata<-mydata(n=n, model=model, p=p, bb0=bb0, bb=bb, x.sd=x.sd, v1=v1, v2=v2, dist=dist, eps.sd=eps.sd, u.sd=u.sd)
+## Data generation under the logistic model
+outdat<-mydata(n=n, model=model, p=p, bb0=bb0, bb=bb, x.sd=x.sd,
+dist=dist,v1=v1, v2=v2, eps.sd=eps.sd, u.sd=u.sd) #
 
-
+## Multi-stage nonparametric estimation
+results<-sim.nonpara(n=n, model=model, dist=dist, k1=k1, k2=k2,
+num.interp=num.interp, newl=newl, eps.sd=eps.sd, mean.diff=1, tolerance=tolerance,
+itermax=50, iter=iter, time.length=time.length, dat=outdat)
 
 }

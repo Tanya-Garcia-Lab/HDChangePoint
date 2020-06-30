@@ -4,11 +4,22 @@
 \alias{hd.study}
 \title{Analysis example using the simulated HD dataset}
 \usage{
-hd.study(simu.data = simu.data, m = 30, num.interp = 30, n = 80,
-  newl = 30, mean.diff = 1, tolerance = 0.005, itermax = 20,
-  iter = 0)
+hd.study(
+  simu.data = simu.dat,
+  m = 30,
+  num.interp = 30,
+  n = 80,
+  newl = 30,
+  mean.diff = 1,
+  tolerance = 0.005,
+  itermax = 20,
+  iter = 0,
+  boot.ci = TRUE
+)
 }
 \arguments{
+\item{simu.data}{a simulated data set, see \code{DATA.R} for details.}
+
 \item{m}{number of time points at which predictors are required for the longitudinal responses in the parametric NLME procedure}
 
 \item{num.interp}{number of pseudo-data points, which are unifromly generated within the observed data points.}
@@ -25,21 +36,21 @@ hd.study(simu.data = simu.data, m = 30, num.interp = 30, n = 80,
 
 \item{iter}{initial number of iteration in the multi-stage nonparametric algorithm. The default is 0.}
 
-\item{simu.dat}{a simulated data set, see \code{DATA.R} for details.}
+\item{boot.ci}{logical value: TRUE if the 95\% bootstrap confidence intervals across all subjects are calcuated and plotted on the graph. Default is TRUE.}
 }
 \value{
 a list of
+\itemize{
        \item{nonpara_summary_table4}{a 5 x 4 array of estimates, standard errors, t-values and p-values for the fixed effects of \code{beta0}, CAG repeates and gender in the inflection point model and scale parameters of the random errors in the inflection point and the longitudinal models.}
-       \item{para_summary_table4}{a 7 x 4 array of estimates, standard errors, t-values and p-values for the fixed effects of \code{theta1}, \code{theta2}, \code{beta0}, CAG repeates and gender and scale parameters of the random errors in the inflection point and the longitudinal models. The parametric NLME assumes the logistic model.}
-       , which are similar to Table 4 and return Figure 1 in the paper (See the \code{reference}).
+       \item{para_summary_table4}{a 7 x 4 array of estimates, standard errors, t-values and p-values for the fixed effects of \code{theta1}, \code{theta2}, \code{beta0}, CAG repeates and gender and scale parameters of the random errors in the inflection point and the longitudinal models. The parametric NLME assumes the logistic model.
+       , which are similar to Table 4 and return Figure 1 in the paper (See the \code{reference}).}
+}
 }
 \description{
 Analysis example using the simulated HD dataset
 }
 \examples{
-
 library(HDChangePoint)
-
 ## a pseudo data set constructed by using the simulated data
 data("PSEUDO_PREDICT_HD")
 head(PSEUDO_PREDICT_HD)
@@ -55,13 +66,9 @@ tolerance=0.01;
 itermax=20;
 iter=0;
 
-simu.analysis.results<-hd.study(simu.data=simu.data, m=m, num.interp=num.interp, n=n, newl=newl,
-                               mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter)
-
-Also, see man/examples/reproduce_simulation_study_analysis.R
-
-
+simu.analysis.results<-hd.study(simu.data=simu.dat, m=m, num.interp=num.interp, n=n, newl=newl,
+ mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter, boot.ci=TRUE)
 }
 \references{
-U.Lee, R.J.Carroll, K.Marder, Y.Wang, T.P.Garcia. (2018+). Estimating Disease Onset from Change Points of Markers Measured with Error.
+U.Lee, R.J.Carroll, K.Marder, Y.Wang, T.P.Garcia. (2019+). Estimating Disease Onset from Change Points of Markers Measured with Error.
 }

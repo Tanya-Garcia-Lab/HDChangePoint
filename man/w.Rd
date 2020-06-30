@@ -21,7 +21,6 @@ a vector of response values corresponding a vector of time points \eqn{x}, whose
 Nonlinear S-shaped Model
 }
 \examples{
-
 library(HDChangePoint)
 
 
