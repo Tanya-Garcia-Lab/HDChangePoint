@@ -1,4 +1,3 @@
-
 #' Summary results of the multi-stage nonparametric procedure
 #'
 #' @param nsim number of simulation runs.
@@ -14,37 +13,20 @@
 #' @param true.sigma.eps a true scale parameter for the within-subject error term in the longitudinal model.
 #' @param file a character string of file name to generate plots with .eps file extention.
 #'
-#''
-#' @return A list of the summarized simulation results from the multi-stage nonparametric procedure
 #'
+#' @return A list of the summarized simulation results from the multi-stage nonparametric procedure
+#' \itemize{
 #'        \item{res.table}{a data frame of the absolute biases, estimated standard deviations, average of the estimated standard errors and 95\% coverage probabilities for the fixed effects (\code{bb.true}, \code{bb0.true}).}
 #'        \item{relative.avr.est.Z}{a data frame of the relative average performance of inflection points for all subjects including the relative absolute biases, the relative empirical standard errors, the relative bootstrap standard deviations and 95\% bootstrap confidence intervals.}
-#'
-#'
+#' }
+#' @import graphics
+#' @importFrom grDevices postscript
+#' @importFrom grDevices dev.off
 #' @export
 #'
-#' @examples
-#'
-#' library(HDChangePoint)
-#' data(nonpara_logist_visit1_nsim500)
-#'
-#' ## Specify parameters to obtain the summary results when the true data were generated from the logistic model.
-#'
-#' nsim=500;
-#' n=80;
-#' num.interp=45;
-#' newl=45;
-#' bb.true=0.1;
-#' b0.true=0.5;
-#' true.sigma.u=0.05;
-#' true.sigma.eps=0.05;
-#' time.length=20;
-#' file="logistic_visit1";
-#'
-#' simus.out<-simus.results(nsim=nsim, n=n, res=combi.res, model="logist", num.interp=num.interp, newl=newl, time.length=time.length, bb.true=bb.true,
-#'                          b0.true=b0.true, true.sigma.u=true.sigma.u, true.sigma.eps=true.sigma.eps, file=file)
-#'
-#'
+#' @example man/examples/results_multi_stage_nonpara_example.R
+
+
 
 simus.results<-function(nsim=500, n=80, res=combi.res, model="logist", num.interp=45, newl=45, time.length=20, bb.true=0.1, b0.true=0.5,
                         true.sigma.u=0.05, true.sigma.eps=0.05,  file="logist"){
@@ -319,14 +301,14 @@ simus.results<-function(nsim=500, n=80, res=combi.res, model="logist", num.inter
   bias.Ta<-mean(mae.Ta)
 
   ## (2) empirical SD for Z: standard deviation over simulations runs for each subject and average out them across subjects
-  sd.update.z<-apply(update.z, 2, sd) 
-  sd.update.z.all<-mean(sd.update.z) 
+  sd.update.z<-apply(update.z, 2, sd)
+  sd.update.z.all<-mean(sd.update.z)
 
 
 
   ## (3) Boostrap sd for Z
-  boot.sd.Z<-apply(ind.boot.sd, 2, mean) 
-  avr.boot.sd.Z<-mean(boot.sd.Z) 
+  boot.sd.Z<-apply(ind.boot.sd, 2, mean)
+  avr.boot.sd.Z<-mean(boot.sd.Z)
 
 
   ### Coverage probability for Z
@@ -338,7 +320,7 @@ simus.results<-function(nsim=500, n=80, res=combi.res, model="logist", num.inter
 
 
   avr.boot.cp<-colMeans(avr.boot.ind.cp)
- 
+
 
   ## esimation for Z}}
 
@@ -465,7 +447,7 @@ simus.results<-function(nsim=500, n=80, res=combi.res, model="logist", num.inter
   dev.off()
 
 
-  return(list(res.table=res.table,  relative.avr.est.Z=relative.avr.est.Z 
+  return(list(res.table=res.table,  relative.avr.est.Z=relative.avr.est.Z
   ))
 
 
