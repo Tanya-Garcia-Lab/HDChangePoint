@@ -1,6 +1,12 @@
 #' Analysis example using the simulated HD dataset
-#'
 #' @param simu.data a simulated data set, see \code{DATA.R} for details.
+#' @param subid column name for the group id from your dataset.
+#' @param event column name for the event of interest from your dataset.
+#' @param tms column name for the total motor score from your dataset.
+#' @param cag column name for the cag repeats from your dataset.
+#' @param age column name for the age (time) from your dataset. 
+#' @param gender column name for the gender from your dataset. 
+#' @param trans.age log transformed age (time) from your dataset.
 #' @param m number of time points at which predictors are required for the longitudinal responses in the parametric NLME procedure
 #' @param num.interp number of pseudo-data points, which are unifromly generated within the observed data points.
 #' @param n number of sample size.
@@ -36,6 +42,13 @@
 #'
 #' ## Specify the parameters to obtained the analysis results from the simulated dataset.
 #' simu.dat<-PSEUDO_PREDICT_HD
+#' subid="SUBJID";
+#' event="event";
+#' tms="TOTAL_MOTOR_SCORE";
+#' cag="CAG";
+#' age="AGE";
+#' gender="gender";
+#' trans.age="logAGE";
 #' n=80;
 #' m=45;
 #' num.interp=45;
