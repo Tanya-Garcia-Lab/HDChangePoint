@@ -15,8 +15,8 @@ Description: The parametric approach uses a nonlinear mixed effects model, which
              can be estimated using the best linear unbiased predictors. The multi-stage nonparametric approach is designed to estimate individual longitudinal trajectories and 
              and their inflection points iteratively. To do this, we develop an iterative algorithm.
 License: GPL-2
-Depends: R (>= 3.0.1), scam, ShapeChange, sfsmisc, nlme
-Imports: mgcv, ggplot2, graphics, grDevices, stats
+Depends: R (>= 3.0.1)
+Imports: mgcv, scam,  sfsmisc, nlme, ShapeChange, coneproj, ggplot2, graphics, grDevices, stats
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0

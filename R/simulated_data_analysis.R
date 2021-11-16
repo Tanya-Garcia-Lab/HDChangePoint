@@ -25,12 +25,9 @@
 #' }
 #' @references U.Lee, R.J.Carroll, K.Marder, Y.Wang, T.P.Garcia. (2019+). Estimating Disease Onset from Change Points of Markers Measured with Error.
 #'
-#' @import nlme
-#' @import mgcv
-#' @import scam
-#' @import ggplot2
+#' @import nlme, mgcv, scam, ggplot2, sfsmisc
 #' @import ShapeChange
-#' @import sfsmisc
+#' @importFrom coneproj, qprog
 #'
 #' @export
 #'
@@ -373,7 +370,7 @@ hd.study<-function(simu.data=simu.dat, subid="SUBJID",
 
       }else{
 
-        ind.Ta<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
+        ind.Ta<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)
         indvidual.Ta[id]<-ind.Ta$chpt
       }
 
