@@ -155,10 +155,9 @@ itermax=20;
 iter=0;
 
 # produce two tables to reproduce similar results as in Table 4 and Figure 1 of our manuscript
-simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG", 
-                                age="AGE", gender="gender", trans.age="logAGE", m=m, num.interp=num.interp, 
-                                n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
-                                boot.ci=TRUE)
+simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG", age="AGE", gender="gender", trans.age="logAGE", m=m, num.interp=num.interp, 
+n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
+boot.ci=TRUE)
 
 ```
 
