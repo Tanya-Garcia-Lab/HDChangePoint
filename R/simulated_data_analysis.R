@@ -58,16 +58,21 @@
 #' itermax=20;
 #' iter=0;
 #'
-#' simu.analysis.results<-hd.study(simu.data=simu.dat, m=m, num.interp=num.interp, n=n, newl=newl,
+#' simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG",
+#' age="AGE", gender="gender", trans.age="logAGE",m=m, num.interp=num.interp, n=n, newl=newl,
 #'  mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter, boot.ci=TRUE)
 
 
 
-hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
+hd.study<-function(simu.data=simu.dat, subid="SUBJID",
+                   event="event", tms="TOTAL_MOTOR_SCORE",
+                   cag="CAG", age="AGE", gender="gender",
+                   trans.age="logAGE", m=30, num.interp=30, n=80,
                    newl=30,  mean.diff=1, tolerance=0.005, itermax=20, iter=0, boot.ci=TRUE){
 
+  
   ## 80 subjects
-  obsID<-unique(simu.data$SUBJID)
+  obsID<-unique(simu.data[,subid])
 
   #########################
   ## estimation starts ####
@@ -116,7 +121,7 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
     #   Individual data   #
     #######################
 
-    subind<-which(simu.data$SUBJID==obsID[id])
+    subind<-which(simu.data[,subid]==obsID[id])
     subdata<-simu.data[subind,]
 
 
@@ -125,8 +130,8 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
 
     ### baseline covariate ###
-    base<-subdata[subdata$event==1,]
-    base.cov[id,]<-c(base$AGE, base$CAG, base$gender, base$logAGE)
+    base<-subdata[subdata[,event]==1,]
+    base.cov[id,]<-c(base[,age], base[,cag], base[,gender], base[,trans.age])
 
 
 
@@ -137,7 +142,7 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
     subdata<-data.frame(subdata)
 
-    interp.pts<-approx(subdata$logAGE, subdata$TOTAL_MOTOR_SCORE, method="linear", n=num.interp, rule=1)
+    interp.pts<-approx(subdata[,trans.age], subdata[,tms], method="linear", n=num.interp, rule=1)
     xxinterp<-interp.pts$x
     yyinterp<-interp.pts$y
 
@@ -183,15 +188,14 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
       ## all inflection points are aligned at 0
 
       #id<-1;rm(id)
-      subsubj<-which(simu.data$SUBJID==obsID[id])
+      subsubj<-which(simu.data[,subid]==obsID[id])
       subdat<-simu.data[subsubj,]
 
-      sub.xx.dat<-subdat$logAGE-old.zstar[id]
-      #xxstar[,id]<-pseudox[,id]-old.zstar[id]
-      sub.yy.dat<-subdat$TOTAL_MOTOR_SCORE
+      sub.xx.dat<-subdat[,trans.age]-old.zstar[id]
+      sub.yy.dat<-subdat[,tms]
 
       ### save interpolation points ####
-      scam.dat<-cbind( subdat$logAGE,  sub.yy.dat, sub.xx.dat)
+      scam.dat<-cbind( subdat[,trans.age],  sub.yy.dat, sub.xx.dat)
       colnames(scam.dat)<-c("logAGE", "TMS","logDiff")
 
       ## Separate Data frame compare to logT
@@ -199,9 +203,9 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
 
 
-      subscam.data$fac1<-ifelse(subscam.data$logDiff<0, 1,0)
-      subscam.data$fac2<-1-subscam.data$fac1
-      subscam.data$fac<-c(rep(1, sum(subscam.data$fac1)),rep(2, sum(subscam.data$fac2)))
+      subscam.data$fac1<-ifelse(subscam.data[,"logDiff"]<0, 1,0)
+      subscam.data$fac2<-1-subscam.data[,"fac1"]
+      subscam.data$fac<-c(rep(1, sum(subscam.data[,"fac1"])),rep(2, sum(subscam.data[,"fac2"])))
 
       scamfit.data[[id]]<- subscam.data
 
@@ -236,7 +240,7 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
       xxstar[,id]<-pseudox[,id]-old.zstar[id]
 
-      combine.two.vectors<-c(scamfit.data[[id]]$logDiff, xxstar[,id])
+      combine.two.vectors<-c(scamfit.data[[id]][,"logDiff"], xxstar[,id])
       merge.two.vectors[[id]]<-as.vector(unique(sort(combine.two.vectors)))
 
     }
@@ -290,9 +294,8 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
     }else{
 
-      glob.change.fit<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
-      glob.T<-glob.change.fit$chpt
-
+      glob.T<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
+     
 
     }
 
@@ -340,12 +343,6 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
       fac.ind.logS<-ind.logS$logDiff*ind.logS$fac1+ind.logS$logDiff*ind.logS$fac2
       q<-length(fac.ind.logS)
 
-      #ind.predict.tms[,id]<-ind.tms.pred
-      #ind.str.predict.tms[,id]<-ind.tms.se.pred
-
-      #newdlogS[,id]<-fac.ind.logS
-
-
       ######################################
       # methods to find inflection points ##
       ######################################
@@ -356,8 +353,7 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
       ind.tms.pred<-as.vector(ind.tms.pred)
       fac.ind.logS<-as.vector(fac.ind.logS)
 
-      #Ta<-changept(ind.tms.pred~ip(fac.ind.logS, sh=1),fir=TRUE)$chpt
-
+     
 
       if(boot.ci==TRUE){
 
@@ -411,9 +407,9 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
   fit.data<-data.frame(cbind(zstar, base.cov))
 
   ## baseline covariate are standardized ##
-  fit.data$std.age<-(fit.data$AGE-mean(fit.data$AGE))/sd(fit.data$AGE)
-  fit.data$std.logage<-(fit.data$logAGE-mean(fit.data$logAGE))/sd(fit.data$logAGE)
-  fit.data$std.CAG<-(fit.data$CAG-mean(fit.data$CAG))/sd(fit.data$CAG)
+  fit.data$std.age<-(fit.data[,age]-mean(fit.data[,age]))/sd(fit.data[,age])
+  fit.data$std.logage<-(fit.data[,trans.age]-mean(fit.data[,trans.age]))/sd(fit.data[,trans.age])
+  fit.data$std.CAG<-(fit.data[,cag]-mean(fit.data[,cag]))/sd(fit.data[,cag])
 
   ## fit linear model to estimate fixed effects ##
   fit0<-lm(zstar~std.CAG+factor(gender), data=fit.data)
@@ -453,8 +449,8 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
   #########################
   # STANDARDIZED CAG   ####
   #########################
-  stdardized.age<-(base.cov[,"logAGE"]-mean(base.cov[,"logAGE"]))/sd(base.cov[,"logAGE"])
-  stdardized.CAG<-(base.cov[,"CAG"]-mean(base.cov[,"CAG"]))/sd(base.cov[,"CAG"])
+  stdardized.age<-(base.cov[,trans.age]-mean(base.cov[,trans.age]))/sd(base.cov[,trans.age])
+  stdardized.CAG<-(base.cov[,cag]-mean(base.cov[,cag]))/sd(base.cov[,cag])
   #stdardized.SDMT<-(base.cov[,"SDMT"]-mean(base.cov[,"SDMT"]))/sd(base.cov[,"SDMT"])
   #stdardized.SC<-(base.cov[,"SC"]-mean(base.cov[,"SC"]))/sd(base.cov[,"SC"])
   #stdardized.SW<-(base.cov[,"SW"]-mean(base.cov[,"SW"]))/sd(base.cov[,"SW"])
@@ -544,7 +540,7 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
 
 
   ## prediction ft
-  num.ID<-unique(newgrdata.para[,"SUBJID"])
+  num.ID<-unique(newgrdata.para[,subid])
 
   #m=30;
   predage<-seq(2.5, 4.5, length=m)
@@ -554,9 +550,9 @@ hd.study<-function(simu.data=simu.dat, m=30, num.interp=30, n=80,
   #logDiff.para <-vector("list", n)
   for(id in 1:n){
     #rm(id); id<-1
-    subdata.para<-newgrdata.para[newgrdata.para[,"SUBJID"]==num.ID[id], ]
+    subdata.para<-newgrdata.para[newgrdata.para[,subid]==num.ID[id], ]
 
-    newage1<-data.frame(logAGE=predage,stdz_CAG=unique(subdata.para[,"stdz_CAG"]), gender=unique(subdata.para[,"gender"]), SUBJID=num.ID[id]) #,stdz_SDMT=unique(subdata[,"stdz_SDMT"]),stdz_SC=unique(subdata[,"stdz_SC"]),
+    newage1<-data.frame(logAGE=predage,stdz_CAG=unique(subdata.para[,"stdz_CAG"]), gender=unique(subdata.para[,gender]), SUBJID=num.ID[id]) #,stdz_SDMT=unique(subdata[,"stdz_SDMT"]),stdz_SC=unique(subdata[,"stdz_SC"]),
     #stdz_SW=unique(subdata[,"stdz_SW"]),stdz_SI=unique(subdata[,"stdz_SI"]), gender=unique(subdata[,"gender"]), SUBJID=num.ID[id])
     #logDiff.para[[id]]<-newage1[, 1]-est.logT.nlme1[id]
     pred.sub1<-predict(tms.nlme1, newage1, level=0:1)
