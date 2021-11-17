@@ -29,7 +29,7 @@
 #' @import mgcv 
 #' @import scam
 #' @import ggplot2 
-#' @importFrom ShapeChange changept
+#' @import ShapeChange 
 #' @export
 #'
 #' @examples

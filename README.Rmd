@@ -1,8 +1,12 @@
 ---
-title: "HDChangePoint"
-author: "Unkyung Lee"
-date: "6/29/2020"
-output: ioslides_presentation
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +30,6 @@ devtools::install_github("unkyunglee/HDChangePoint")
 
 ## Usage
 ```{r usage, eval=F, message=FALSE}
-
 # Example for the Multi-Stage Nonparametric estimation
 library(HDChangePoint)
 # Specify parameters for data generation
@@ -41,13 +44,10 @@ v2=7;
 dist="normal";
 eps.sd=0.05;
 u.sd=0.05;
-
 set.seed(22)
 # Generate a dataset under the logistic model
 outdat<-mydata(n=n, model=model, p=p, bb0=bb0, bb=bb, x.sd=x.sd, 
                v1=v1, v2=v2, dist=dist, eps.sd=eps.sd, u.sd=u.sd)
-
-
 # Specify other parameters for the multi-stage nonparametric procedure
 num.interp=45;
 newl=45;
@@ -57,11 +57,9 @@ time.length=20;
 mean.diff=1;
 tolerance=0.009
 iter=0;
-
 # Multi-stage nonparametric estimation
 results<-sim.nonpara(n=n, model="logist", dist="normal", k1=k1, k2=k2, num.interp=num.interp, newl=newl, eps.sd=eps.sd, mean.diff=1, tolerance=tolerance,
 itermax=50, iter=iter, time.length=time.length, dat=outdat)
-
 ## Usage for paraNLME procedure
 ## Specify parameters to generate true data
 n=80;
@@ -75,7 +73,6 @@ v2=7;
 dist="normal";
 eps.sd=0.05;
 u.sd=0.05;
-
 ## When NLME specifies the correct model
 ## Specify parameters for the parametric NLME procedure
 num.boot=1000;
@@ -89,13 +86,10 @@ para2=6.3;
 para3=0;
 para4=2.8;
 para5=1.5;
-
 ## Do parametric NLME estimation
 results<-main.arctan.nlme(n=n, model=model, dat=outdat, num.boot=num.boot, time.length=time.length,
 true.gam1=true.gam1, true.gam3=true.gam3, para1=para1, para2=para2, para3=para3,
 para4=para4, para5=para5, eps.sd=eps.sd, dist=dist)
-
-
 ## When NLME specifies incorrect model
 ## Specify parameters for the parametric NLME procedure
 num.boot=1000;
@@ -108,7 +102,6 @@ para1=6.5;
 para2=5.3;
 para3=0;
 para4=1;
-
 ## Do parametric NLME estimation
 results<- main.logistic.missp.nlme(n=n, model=model, dat=outdat, num.boot=num.boot,
 time.length=time.length, true.gam1=true.gam1, true.gam3=true.gam3, para1=para1,para2=para2,
@@ -135,7 +128,6 @@ head(PSEUDO_PREDICT_HD)
 We fit our methods to the `PSEUDO_PREDICT_HD` data. First, we specify the parameters and run the function `hd.study()`.
   
 ```{r pseudo_analysis, message=FALSE, results='hide'}
-
 # Specify the parameters
 simu.dat<-PSEUDO_PREDICT_HD;
 subid="SUBJID";
@@ -153,13 +145,11 @@ mean.diff=1;
 tolerance=0.01;
 itermax=20;
 iter=0;
-
 # produce two tables to reproduce similar results as in Table 4 and Figure 1 of our manuscript
 simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG", 
                                 age="AGE", gender="gender", trans.age="logAGE", m=m, num.interp=num.interp, 
                                 n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
                                 boot.ci=TRUE)
-
 ```
 
 We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript. 
