@@ -46,6 +46,8 @@
 #' @import stats
 #' @import mgcv
 #' @import scam
+#' @import ggplot2
+#' @import nlme
 #' @importFrom sfsmisc D1D2
 #' @importFrom ShapeChange changept
 #'

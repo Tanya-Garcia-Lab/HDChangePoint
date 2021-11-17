@@ -16,10 +16,10 @@ Description: The parametric approach uses a nonlinear mixed effects model, which
              and their inflection points iteratively. To do this, we develop an iterative algorithm.
 License: GPL-2
 Depends: R (>= 3.0.1)
-Imports: mgcv, scam,  sfsmisc, nlme, ShapeChange, coneproj, ggplot2, graphics, grDevices, stats
+Imports: mgcv, scam, nlme, ShapeChange, ggplot2, graphics, grDevices, sfsmisc, stats
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown

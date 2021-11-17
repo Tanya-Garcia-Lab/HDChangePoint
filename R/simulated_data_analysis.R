@@ -25,10 +25,11 @@
 #' }
 #' @references U.Lee, R.J.Carroll, K.Marder, Y.Wang, T.P.Garcia. (2019+). Estimating Disease Onset from Change Points of Markers Measured with Error.
 #'
-#' @import nlme, mgcv, scam, ggplot2, sfsmisc
-#' @import ShapeChange
-#' @importFrom coneproj, qprog
-#'
+#' @import nlme 
+#' @import mgcv 
+#' @import scam
+#' @import ggplot2 
+#' @importFrom ShapeChange changept
 #' @export
 #'
 #' @examples
@@ -55,9 +56,11 @@
 #' itermax=20;
 #' iter=0;
 #'
-#' simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG",
-#' age="AGE", gender="gender", trans.age="logAGE",m=m, num.interp=num.interp, n=n, newl=newl,
-#'  mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter, boot.ci=TRUE)
+#' simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", 
+#'                        tms="TOTAL_MOTOR_SCORE", cag="CAG", age="AGE", gender="gender", 
+#'                        trans.age="logAGE",m=m, num.interp=num.interp, n=n, newl=newl,
+#'                        mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,
+#'                        boot.ci=TRUE)
 
 
 
