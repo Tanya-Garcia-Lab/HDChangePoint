@@ -98,3 +98,54 @@ results<- main.logistic.missp.nlme(n=n, model=model, dat=outdat, num.boot=num.bo
 time.length=time.length, true.gam1=true.gam1, true.gam3=true.gam3, para1=para1,para2=para2,
 para3=para3, para4=para4, eps.sd=eps.sd, dist=dist)
 ```
+
+## Example 1. 
+
+We give an example to show reproducibility for data analysis study in our manuscript. We consider the `PSEUDO_PREDICT_HD` data available from R package `HDChangePoint`. 
+
+```{r pseudo_data, results='hide'}
+library(HDChangePoint)
+data(PSEUDO_PREDICT_HD)
+```
+
+The data consist of 80 subjects' information with 8 variables. Each subject made different number of visits $m=5,6$ or $7$ at clinics. In the `PSEUDO_PREDICT_HD` data, we consider two subject specific covariates: CAG repeats and gender, which may be associated with inflection points.
+
+```{r data_info, message=FALSE}
+head(PSEUDO_PREDICT_HD)
+?PSEUDO_PREDICT_HD # this gives you more information on the dataset
+```
+
+We fit our methods to the `PSEUDO_PREDICT_HD` data. First, we specify the parameters and run the function `hd.study()`.
+  
+```{r pseudo_analysis, message=FALSE, results='hide'}
+# Specify the parameters
+simu.dat<-PSEUDO_PREDICT_HD;
+subid="SUBJID";
+event="event";
+tms="TOTAL_MOTOR_SCORE";
+cag="CAG";
+age="AGE";
+gender="gender";
+trans.age="logAGE";
+n=80;
+m=40;
+num.interp=40;
+newl=40;
+mean.diff=1;
+tolerance=0.01;
+itermax=20;
+iter=0;
+
+# produce two tables to reproduce similar results as in Table 4 and Figure 1 of our manuscript
+simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG", age="AGE", gender="gender", trans.age="logAGE", m=m, num.interp=num.interp, 
+n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
+boot.ci=TRUE)
+```
+
+We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript.
+
+```{r analysis_results}
+# produce results
+simu.analysis.results$nonpara_summary_table4 # multi-stage nonparametric estimates
+simu.analysis.results$para_summary_table4    # parametric NLME estimates
+```
