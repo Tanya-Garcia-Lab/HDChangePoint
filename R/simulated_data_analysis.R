@@ -30,6 +30,7 @@
 #' @import scam
 #' @import ggplot2 
 #' @import ShapeChange 
+#' 
 #' @export
 #'
 #' @examples
@@ -294,7 +295,7 @@ hd.study<-function(simu.data=simu.dat, subid="SUBJID",
       
     }else{
       
-      glob.T<-changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
+      glob.T<-ShapeChange::changept(tms.pred~ip(newlogS, sh=1),fir=TRUE)$chpt
       
       
     }
