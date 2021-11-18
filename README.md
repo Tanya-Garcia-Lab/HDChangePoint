@@ -1,3 +1,4 @@
+<<<<<<< HEAD:README.Rmd
 ---
 title: "HDChagnePoint"
 author: "Unkyung Lee"
@@ -9,6 +10,8 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+=======
+>>>>>>> 02a0c5c37b1630ce01abfc715d3c616a4042b15b:README.md
 ## Overview
 The R package `HDChangePoint` implements two estimation methods using the parametric nonlinear mixed effects model (NLME) and the multi-stage nonparametric approaches, which are described in the following manuscript: 
   
@@ -44,6 +47,7 @@ set.seed(22)
 # Generate a dataset under the logistic model
 outdat<-mydata(n=n, model=model, p=p, bb0=bb0, bb=bb, x.sd=x.sd, 
                v1=v1, v2=v2, dist=dist, eps.sd=eps.sd, u.sd=u.sd)
+               
 # Specify other parameters for the multi-stage nonparametric procedure
 num.interp=45;
 newl=45;
@@ -53,9 +57,11 @@ time.length=20;
 mean.diff=1;
 tolerance=0.009
 iter=0;
+
 # Multi-stage nonparametric estimation
 results<-sim.nonpara(n=n, model="logist", dist="normal", k1=k1, k2=k2, num.interp=num.interp, newl=newl, eps.sd=eps.sd, mean.diff=1, tolerance=tolerance,
 itermax=50, iter=iter, time.length=time.length, dat=outdat)
+
 ## Usage for paraNLME procedure
 ## Specify parameters to generate true data
 n=80;
@@ -82,10 +88,12 @@ para2=6.3;
 para3=0;
 para4=2.8;
 para5=1.5;
+
 ## Do parametric NLME estimation
 results<-main.arctan.nlme(n=n, model=model, dat=outdat, num.boot=num.boot, time.length=time.length,
 true.gam1=true.gam1, true.gam3=true.gam3, para1=para1, para2=para2, para3=para3,
 para4=para4, para5=para5, eps.sd=eps.sd, dist=dist)
+
 ## When NLME specifies incorrect model
 ## Specify parameters for the parametric NLME procedure
 num.boot=1000;
@@ -98,11 +106,13 @@ para1=6.5;
 para2=5.3;
 para3=0;
 para4=1;
+
 ## Do parametric NLME estimation
 results<- main.logistic.missp.nlme(n=n, model=model, dat=outdat, num.boot=num.boot,
 time.length=time.length, true.gam1=true.gam1, true.gam3=true.gam3, para1=para1,para2=para2,
 para3=para3, para4=para4, eps.sd=eps.sd, dist=dist)
 ```
+
 ## Example 1. 
 
 We give an example to show reproducibility for data analysis study in our manuscript. We consider the `PSEUDO_PREDICT_HD` data available from R package `HDChangePoint`. 
@@ -111,8 +121,6 @@ We give an example to show reproducibility for data analysis study in our manusc
 library(HDChangePoint)
 data(PSEUDO_PREDICT_HD)
 ```
-
-
 
 The data consist of 80 subjects' information with 8 variables. Each subject made different number of visits $m=5,6$ or $7$ at clinics. In the `PSEUDO_PREDICT_HD` data, we consider two subject specific covariates: CAG repeats and gender, which may be associated with inflection points.
 
@@ -148,7 +156,8 @@ simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event
                                 boot.ci=TRUE)
 ```
 
-We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript. 
+We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript.
+
 ```{r analysis_results}
 # produce results
 simu.analysis.results$nonpara_summary_table4 # multi-stage nonparametric estimates
