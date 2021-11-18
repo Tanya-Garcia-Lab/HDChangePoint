@@ -29,7 +29,10 @@
 #' @import mgcv 
 #' @import scam
 #' @import ggplot2 
-#' @import ShapeChange 
+#' @import Rcpp
+#' @importFrom ShapeChange changept
+#' @importFrom ShapeChange ip
+#' 
 #' 
 #' @export
 #'

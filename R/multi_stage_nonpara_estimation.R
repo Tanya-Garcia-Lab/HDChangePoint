@@ -50,6 +50,7 @@
 #' @import nlme
 #' @importFrom sfsmisc D1D2
 #' @importFrom ShapeChange changept
+#' @importFrom ShapeChange ip
 #'
 #' @export
 #'

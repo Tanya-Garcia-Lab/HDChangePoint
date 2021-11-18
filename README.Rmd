@@ -1,12 +1,8 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "HDChagnePoint"
+author: "Unkyung Lee"
+date: "11/16/2021"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -129,7 +125,7 @@ We fit our methods to the `PSEUDO_PREDICT_HD` data. First, we specify the parame
   
 ```{r pseudo_analysis, message=FALSE, results='hide'}
 # Specify the parameters
-simu.dat<-PSEUDO_PREDICT_HD;
+simu.dat<-PSEUDO_PREDICT_HD
 subid="SUBJID";
 event="event";
 tms="TOTAL_MOTOR_SCORE";
@@ -138,17 +134,18 @@ age="AGE";
 gender="gender";
 trans.age="logAGE";
 n=80;
-m=42;
-num.interp=42;
-newl=42;
+m=40;
+num.interp=40;
+newl=40;
 mean.diff=1;
 tolerance=0.01;
 itermax=20;
 iter=0;
+
 # produce two tables to reproduce similar results as in Table 4 and Figure 1 of our manuscript
 simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event", tms="TOTAL_MOTOR_SCORE", cag="CAG", age="AGE", gender="gender", trans.age="logAGE", m=m, num.interp=num.interp, 
-n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
-boot.ci=TRUE)
+                                n=n, newl=newl, mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,     
+                                boot.ci=TRUE)
 ```
 
 We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript. 
