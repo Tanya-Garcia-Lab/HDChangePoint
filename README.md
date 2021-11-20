@@ -1,4 +1,3 @@
-<<<<<<< HEAD:README.Rmd
 ---
 title: "HDChagnePoint"
 author: "Unkyung Lee"
