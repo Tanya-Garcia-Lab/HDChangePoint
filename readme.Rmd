@@ -1,34 +1,32 @@
-HDChangePoint
-================
-Unkyung Lee
-11/22/2021
+---
+title: "HDChangePoint"
+author: "Unkyung Lee"
+date: "11/22/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Overview
+The R package `HDChangePoint` implements two estimation methods using the parametric nonlinear mixed effects model (NLME) and the multi-stage nonparametric approaches, which are described in the following manuscript: 
+  
+  **U.Lee, R.J.Carroll, K.Marder, Y.wang and T.P.Garcia. (2020) "Estimating Disease Onset from Change Points of Markers Measured with Error", Biostatistics, kxz068, https://doi.org/10.1093/biostatistics/kxz068**
+  
+Those two methods estimate individual longitudinal trajectories in an "S"-shape and their respective inflection points.
 
-The R package `HDChangePoint` implements two estimation methods using
-the parametric nonlinear mixed effects model (NLME) and the multi-stage
-nonparametric approaches, which are described in the following
-manuscript:
 
-**U.Lee, R.J.Carroll, K.Marder, Y.wang and T.P.Garcia. (2020)
-“Estimating Disease Onset from Change Points of Markers Measured with
-Error”, Biostatistics, kxz068,
-<https://doi.org/10.1093/biostatistics/kxz068>**
-
-Those two methods estimate individual longitudinal trajectories in an
-“S”-shape and their respective inflection points.
-
-## Installation
+## Installation 
 
 To install `HDChangePoint` from GitHub,
-
-``` r
+```{r, eval=FALSE}
 devtools::install_github("unkyunglee/HDChangePoint")
 ```
 
 ## Usage
+```{r usage, eval=F, message=FALSE}
 
-``` r
 # Example for the Multi-Stage Nonparametric estimation
 library(HDChangePoint)
 # Specify parameters for data generation
@@ -117,32 +115,28 @@ time.length=time.length, true.gam1=true.gam1, true.gam3=true.gam3, para1=para1,p
 para3=para3, para4=para4, eps.sd=eps.sd, dist=dist)
 ```
 
-## Example 1.
+## Example 1. 
 
-We give an example to show reproducibility for data analysis study in
-our manuscript. We consider the `PSEUDO_PREDICT_HD` data available from
-R package `HDChangePoint`.
+We give an example to show reproducibility for data analysis study in our manuscript. We consider the `PSEUDO_PREDICT_HD` data available from R package `HDChangePoint`. 
 
-``` r
+```{r pseudo_data, eval=F, results='hide'}
 library(HDChangePoint)
 data(PSEUDO_PREDICT_HD)
 ```
 
-The data consist of 80 subjects’ information with 8 variables. Each
-subject made different number of visits \(m=5,6\) or \(7\) at clinics.
-In the `PSEUDO_PREDICT_HD` data, we consider two subject specific
-covariates: CAG repeats and gender, which may be associated with
-inflection points.
 
-``` r
+
+The data consist of 80 subjects' information with 8 variables. Each subject made different number of visits $m=5,6$ or $7$ at clinics. In the `PSEUDO_PREDICT_HD` data, we consider two subject specific covariates: CAG repeats and gender, which may be associated with inflection points.
+
+```{r data_info, eval=FALSE, message=FALSE}
 head(PSEUDO_PREDICT_HD)
 ?PSEUDO_PREDICT_HD # this gives you more information on the dataset
 ```
 
-We fit our methods to the `PSEUDO_PREDICT_HD` data. First, we specify
-the parameters and run the function `hd.study()`.
+We fit our methods to the `PSEUDO_PREDICT_HD` data. First, we specify the parameters and run the function `hd.study()`.
+  
+```{r pseudo_analysis, message=FALSE, eval=FALSE, results='hide'}
 
-``` r
 # Specify the parameters
 simu.dat<-PSEUDO_PREDICT_HD
 subid="SUBJID";
@@ -167,15 +161,14 @@ simu.analysis.results<-hd.study(simu.data=simu.dat, subid="SUBJID", event="event
                         trans.age="logAGE",m=m, num.interp=num.interp, n=n, newl=newl,
                         mean.diff=mean.diff, tolerance=tolerance, itermax=itermax, iter=iter,
                         boot.ci=TRUE)
+
 ```
 
-We obtain the following results for the multi-stage nonparametric
-estimates and the parametric NLME estimates, similar to Table 4 in our
-manuscript. Figure will be automatically saved in your working
-directory, which is similar to Figure 1 in our manuscript.
-
-``` r
+We obtain the following results for the multi-stage nonparametric estimates and the parametric NLME estimates, similar to Table 4 in our manuscript. Figure will be automatically saved in your working directory, which is similar to Figure 1 in our manuscript. 
+```{r analysis_results, eval=FALSE}
 # produce results
 simu.analysis.results$nonpara_summary_table4 # multi-stage nonparametric estimates
 simu.analysis.results$para_summary_table4    # parametric NLME estimates
 ```
+
+
